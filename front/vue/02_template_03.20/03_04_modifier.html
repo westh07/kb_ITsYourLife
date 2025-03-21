@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-model-modifier</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 
+      1. .lazy
+      -> change 이벤트 발생시에만 데이터 업데이트를 함 
+      2. .number
+      -> 사용자 입력을 자동으로 숫자로 형변환 해줌, 숫자로 변환 가능할때만
+      3. .trim
+      -> 입력값의 앞뒤 공백을 자동으로 제거
+      -->
+      <div>
+        <h4>lazy 수식어</h4>
+        lazy Test : <input type="text" v-model.lazy="lazyTest" />
+        <br />
+        입력한 값 : <input type="text" v-bind:value="lazyTest" readonly />
+      </div>
+      <div>
+        <h4>number 수식어</h4>
+        number Test : <input type="text" v-model.number="numberTest" />
+        <br />
+        입력한 값 : <input type="text" v-bind:value="numberTest" readonly />
+      </div>
+      <div>
+        <h4>trim 수식어</h4>
+        trim Test : <input type="text" v-model.trim="trimTest" />
+        <br />
+        입력한 값 : <input type="text" v-bind:value="trimTest" readonly />
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const lazyTest = ref('');
+          const numberTest = ref('');
+          const trimTest = ref('');
+          return {
+            lazyTest,
+            numberTest,
+            trimTest,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>
