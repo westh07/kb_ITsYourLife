@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+    <style>
+      .highlight {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <p>가격 : {{price}}</p>
+      <p>수량 : {{quantity}}</p>
+      <p>
+        총합:
+        <span :class="{highlight:isHighlighted}">{{calculateTotal()}}</span>
+        <!-- ishighlighted가 봐뀌면서 span이 렌더링이 되면서 calculateTotal 함수가 호출됨 -->
+      </p>
+      <button @click="quantity++">수량 증가</button>
+      <button @click="changeColor">색 변경</button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const price = ref(1000);
+          const quantity = ref(1);
+          const isHighlighted = ref(false);
+          const calculateTotal = () => {
+            console.log('총합 계산 실행!!');
+            return price.value * quantity.value;
+          };
+          const changeColor = () => {
+            console.log('재랜더링!');
+            isHighlighted.value = !isHighlighted.value;
+          };
+          return {
+            price,
+            quantity,
+            isHighlighted,
+            calculateTotal,
+            changeColor,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>

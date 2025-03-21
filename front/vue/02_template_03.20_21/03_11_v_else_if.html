@@ -11,10 +11,10 @@
         잔고: <input v-model="balance" />
         <br />
         회원님의 등급:
-        <span>Gold</span>
-        <span>Silver</span>
-        <span>Bronze</span>
-        <span>Basic</span>
+        <span v-if="balance>=1000000">Gold</span>
+        <span v-else-if="balance>=500000">Silver</span>
+        <span v-else-if="balance>=200000">Bronze</span>
+        <span v-else="balance">Basic</span>
       </div>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
