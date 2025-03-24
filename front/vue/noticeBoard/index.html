@@ -16,11 +16,24 @@
   <body>
     <div id="app">
       <h1>📌 게시판 목록</h1>
-
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="검색어를 입력하시오."
+          v-model="selectQuary"
+        />
+      </div>
+      <div class="sort-buttons">
+        <button @click="sortPosts('asc')">오름차순</button>
+        <button @click="sortPosts('desc')">내림차순</button>
+      </div>
       <!-- 여기에 게시글 목록을 표시하는 코드를 작성하세요 -->
-      <div v-for="post in posts" :key="post.no" class="post-item">
+      <div v-for="post in filteredPosts" :key="post.no" class="post-item">
         <div @click="selectPost(post)">{{post.no}}. {{post.title}}</div>
       </div>
+      <!-- <div v-for="post in posts" :key="post.no" class="post-item">
+        <div @click="selectPost(post)">{{post.no}}. {{post.title}}</div>
+      </div> -->
       <!-- 선택한 게시글의 내용을 표시하는 부분을 작성하세요 -->
       <div class="post-content" v-if="selectedPost">
         <h2>{{selectedPost.title}}</h2>
@@ -31,7 +44,7 @@
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-      const { createApp, ref } = Vue;
+      const { createApp, ref, computed } = Vue;
 
       createApp({
         setup() {
@@ -97,6 +110,13 @@
               content:
                 'Git은 버전 관리 시스템이며, GitHub는 이를 활용한 원격 저장소 플랫폼입니다.',
             },
+            ...Array.from({ length: 3000 }, (_, i) => ({
+              no: i + 11,
+              title: `게시글 제목 ${i + 11}`,
+              content: `게시글 ${
+                i + 11
+              }의 내용입니다. 이 글은 자동으로 생성된 내용입니다.`,
+            })),
           ]);
 
           // 선택한 게시글 초기화
@@ -115,12 +135,48 @@
             // 게시글 닫기 기능을 작성하세요
             selectedPost.value = null;
           };
+          // 정렬기능
+          const sortPosts = (order) => {
+            if (order === 'asc') {
+              console.log('오름차순');
+              /*
+              sort(콜백함수) : 배열의 각 요소를 콜백함수를 기준으로 비교해 정렬
+              결과 값이 음수면 -> a가 b보다 앞에 와야함
+              결과 값이 양수면 -> a가 b보다 뒤에 와야함
+              결과 값이 0이면 -> 순서를 바꾸지 않음
+              */
+              posts.value.sort((a, b) => a.no - b.no);
+            } else {
+              console.log('내림차순');
+              posts.value.sort((a, b) => b.no - a.no);
+            }
+          };
+          const selectQuary = ref('');
+          const filteredPosts = computed(() => {
+            console.log('검색기능 호출됨');
+            //검색어가 없을 때는 전체 게시글 보여주기
+            if (!selectQuary.value) {
+              return posts.value;
+            }
+            const query = selectQuary.value.toLowerCase();
+            //filter : 배열의 각 요소에 대해 주어진 조건을 만족하는 요소만 모야
+            // 새 배열을 반환
+            return posts.value.filter((post) => {
+              return (
+                post.title.toLowerCase().includes(query) ||
+                post.content.toLowerCase().includes(query)
+              );
+            });
+          });
 
           return {
             posts,
             selectedPost,
             selectPost,
             closePost,
+            sortPosts,
+            selectQuary,
+            filteredPosts,
           };
         },
       }).mount('#app');
@@ -161,6 +217,14 @@
       }
       button:hover {
         background: #ff4f4f;
+      }
+      .sort-buttons {
+        display: flex;
+        justify-content: center;
+      }
+      .search-container {
+        display: flex;
+        justify-content: center;
       }
     </style>
   </body>

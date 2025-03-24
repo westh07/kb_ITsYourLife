@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+  </head>
+  <body>
+    <div id="app">
+      x : <input type="text" v-model.number="x" /><br />
+      y : <input type="text" v-model.number="y" /><br />
+      덧셈 결과 : {{sum}}
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref, watch } = Vue;
+
+      const app = createApp({
+        setup() {
+          const x = ref(0);
+          const y = ref(0);
+          const sum = ref(0);
+
+          // watch
+          // 비동기 작업, 데이터 봐뀔때, 알림 구현
+          // currnet : 현재 값
+          // old : 변경 전 값
+          watch(x, (current, old) => {
+            console.log(`x : ${old}-->${current}`);
+            sum.value = current + y.value;
+          });
+          watch(y, (current, old) => {
+            console.log(`y : ${old}-->${current}`);
+            sum.value = current + x.value;
+          });
+          return {
+            x,
+            y,
+            sum,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>

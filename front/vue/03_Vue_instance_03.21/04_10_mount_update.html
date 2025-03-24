@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+  </head>
+  <body>
+    <div id="app">
+      1보다 큰 수: <input type="text" v-model.number="num" /><br />
+      1부터 입력한 값까지의 합: <span>{{sum}}</span><br />
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref, computed, onMounted, onUpdated } = Vue;
+
+      const app = createApp({
+        setup() {
+          const num = ref(0);
+          const sum = computed(() => {
+            console.log('sum 호출');
+            let n = parseInt(num.value);
+            if (Number.isNaN(n)) return 0;
+            return (n * (n + 1)) / 2;
+          });
+          // 인스턴스가 생성될때
+          // setUp : 컴포넌트 초기화 시
+          // api 호출, 이벤트 리스너 설정, 초기 데이터 준비 등
+          console.log('created');
+          // onMounted : 컴포넌트가 DOM에 마운트 된 이후
+          // DOM 조작, 외부 라이브러리 초기화(지도, 차트)
+          onMounted(() => {
+            console.log('onMounted(()=>{}) 동작');
+          });
+          // onUpdated : 컴포넌트의 데이터가 변경되어 DOM이 업데이트 된 이후
+          // 업데이트된 DOM에 대한 계산 또는 데이터 동기화
+          onUpdated(() => {
+            console.log('onUpdated(()=>{}) 동작');
+          });
+
+          return {
+            num,
+            sum,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>
