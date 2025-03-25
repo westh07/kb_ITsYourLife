@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+  </head>
+  <body>
+    <div id="app">
+      <div
+        @contextmenu="ctxStop"
+        style="
+          position: absolute;
+          left: 5px;
+          top: 5px;
+          right: 5px;
+          bottom: 5px;
+          border: 1px solid red;
+        "
+      >
+        <!-- a 태그가 실행되었을때 부모요소인 div 도 실행됨 = 버블링 -->
+        <a @contextmenu="childEvent" href="https://facebook.com">페이스북</a>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const ctxStop = (e) => {
+            // e : 이벤트 객체
+            console.log(e);
+            // e.target : 이벤트가 발생한 요소
+            console.log(e.target);
+            // e.currentTarget : 이벤트 리스너가 부착된 요소
+            console.log(e.currentTarget.tagName);
+            // 이벤트 발생 경로
+            console.log(
+              e
+                .composedPath()
+                .map((el) => el.target)
+                .filter(Boolean)
+            );
+            // preventDefault() : 기본 동작을 방지
+            e.preventDefault(); // 우클릭을 막음
+            console.log('우클릭이 금지되었습니다');
+          };
+          const childEvent = (e) => {
+            // stopPropagation() : 버블링을 막음
+            e.stopPropagation();
+            console.log('자식 요소에서 이벤트 발생');
+          };
+          return {
+            ctxStop,
+            childEvent,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>

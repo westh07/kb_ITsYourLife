@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>
+          <i class="fa-solid fa-stopwatch"></i>
+          반사 신경 테스트 게임
+        </h1>
+      </header>
+      <div>
+        <button @click="startGame">게임 시작</button>
+        <div>
+          <i class="fa-solid fa-stopwatch"></i>
+          반응 속도 : {{responseTime}}
+        </div>
+        <div>
+          <i class="fa-solid fa-x"></i>
+          너무 빨리 클릭했어요 다시시도해주세요
+        </div>
+      </div>
+      <div v-show="appearBtn">
+        <button>클릭하세요!</button>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const message = ref('Hello Vue!');
+          const responseTime = ref(0);
+          const appearBtn = ref(false);
+          const startGame = () => {
+            console.log('start game');
+            // .value를 이용해서 할당하기!!!!!
+            appearBtn.value = true;
+          };
+          //   선언한 변수명 리턴하기!!!!!!!!!!
+          return {
+            message,
+            responseTime,
+            appearBtn,
+            startGame,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>
