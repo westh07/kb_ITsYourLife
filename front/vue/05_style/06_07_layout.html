@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>파일명</title>
+    <style>
+      .buttonColor {
+        background-color: aqua;
+        color: black;
+      }
+      .buttonLayout {
+        text-align: center;
+        width: 120px;
+      }
+      .staticBorder {
+        border: khaki dashed 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="checkbox" @click="isLayout" id="layout" />
+      <label for="layout">레이아웃 적용 여부</label>
+      <br />
+      <button class="staticBorder, buttonColor" :class="changeColor">
+        버튼
+      </button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const isClick = ref(false);
+          const changeColor = ref('');
+          const isLayout = () => {
+            console.log(isClick.value);
+            if (isClick.value) {
+              isClick.value = false;
+              changeColor.value = '';
+            } else {
+              isClick.value = true;
+              changeColor.value = 'buttonLayout';
+            }
+          };
+          return {
+            isClick,
+            isLayout,
+            changeColor,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>

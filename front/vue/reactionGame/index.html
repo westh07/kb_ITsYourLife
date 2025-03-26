@@ -32,7 +32,7 @@
         </div>
       </div>
       <div v-show="appearBtn">
-        <button>클릭하세요!</button>
+        <button @click="finishGame">클릭하세요!</button>
       </div>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -44,10 +44,20 @@
           const message = ref('Hello Vue!');
           const responseTime = ref(0);
           const appearBtn = ref(false);
+          const startTime = ref(0);
+          const stopTime = ref(0);
           const startGame = () => {
-            console.log('start game');
+            startTime.value = performance.now();
+
             // .value를 이용해서 할당하기!!!!!
             appearBtn.value = true;
+          };
+          // const runningTime =
+          const finishGame = () => {
+            stopTime.value = performance.now();
+            responseTime.value = stopTime.value - startTime.value;
+            console.log(stopTime, startTime);
+            appearBtn.value = false;
           };
           //   선언한 변수명 리턴하기!!!!!!!!!!
           return {
@@ -55,6 +65,9 @@
             responseTime,
             appearBtn,
             startGame,
+            finishGame,
+            startTime,
+            stopTime,
           };
         },
       });

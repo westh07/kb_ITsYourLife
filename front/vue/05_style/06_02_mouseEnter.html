@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hover</title>
+  </head>
+  <body>
+    <div id="app">
+      <button
+        :style="ismouseHere ? style2:style1"
+        @mouseenter="ismouseHere = true"
+        @mouseleave="ismouseHere = false"
+      >
+        test
+      </button>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const style1 = ref({
+            backgroundColor: 'aqua',
+            color: 'black',
+          });
+          const style2 = ref({
+            backgroundColor: 'black',
+            color: 'white',
+          });
+          const ismouseHere = ref(false);
+
+          return {
+            style1,
+            ismouseHere,
+            style2,
+          };
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>
