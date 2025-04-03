@@ -1,86 +1,25 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-li {
-  list-style: none;
-}
+<script setup></script>
 
-body {
-  background-color: #ced3df;
-}
-/* section */
-.container {
-  width: 80%;
-  max-width: 400px;
-  margin: 50px auto;
-  background-color: #f1f0f7;
-  -webkit-box-shadow: 9px 11px 5px 0px rgba(125, 124, 125, 1);
-  -moz-box-shadow: 9px 11px 5px 0px rgba(125, 124, 125, 1);
-  box-shadow: 9px 11px 5px 0px rgba(125, 124, 125, 1);
-  border-radius: 20px;
-}
-/* header */
-.header {
-  padding: 1rem;
-  font-size: 1.5rem;
-  text-align: center;
-  color: white;
-  background: rgba(237, 193, 211);
-  background: linear-gradient(
-    166deg,
-    rgba(237, 193, 211, 1) 0%,
-    rgba(219, 192, 216, 1) 35%,
-    rgba(127, 188, 242, 1) 100%
-  );
-  border-radius: 20px 20px 0 0;
-}
-/* ???? */
-/* ul */
-.items {
-  padding: 1rem;
-  height: 500px;
-  overflow-y: auto;
-}
-/* li */
-.item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  /* align-items: center; */
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid lightgray;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.item:hover {
-  background-color: #eae9ee;
-}
-/* li 체크 클릭됬을 때 */
-.item.item_done span {
-  opacity: 0.1;
-  text-decoration: line-through;
-}
-.item span {
-  flex: 1;
-  /* text-align: left; */
-}
+<template>
+  <footer class="footer">
+    <input type="text" class="footer_input" />
+    <div class="click-icon">
+      <i class="fa-solid fa-plus"></i>
+      <i class="fa-regular fa-calendar-days"></i>
+      <div class="date_input">
+        <label for="date">D-day 날짜</label> <br />
+        <input type="date" class="date" />
+      </div>
+      <i class="fa-solid fa-circle-minus"></i>
+    </div>
+  </footer>
+  <div class="delete_option">
+    <div class="delete_check">체크된 것 삭제</div>
+    <div class="delete_all">전체 삭제</div>
+  </div>
+</template>
 
-/*  아이콘 */
-.fa-check,
-.fa-trash-can {
-  font-size: 16px;
-  transition: 0.3s;
-}
-.fa-check:hover {
-  color: dodgerblue;
-}
-.fa-trash-can:hover {
-  color: red;
-  transform: scale(1.1);
-}
-
+<style scoped>
 /* footer */
 .footer {
   background: rgba(237, 193, 211);
@@ -232,3 +171,4 @@ body {
   /* width: 184px; */
   /* margin: auto; */
 }
+</style>
