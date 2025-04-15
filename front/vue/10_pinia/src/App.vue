@@ -2,9 +2,9 @@
 import Counter from './components/Counter.vue';
 import Like from './components/Like.vue';
 import { useCounterStore } from './stores/counter';
-import { useHeartStore } from './stores/heart';
+
 const counter = useCounterStore();
-const hearts = useHeartStore();
+const like = useLikeStore();
 </script>
 <!-- 
 likeStore을 만들고 
