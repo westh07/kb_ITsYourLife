@@ -3,7 +3,10 @@ package pm.javaPractice.view;
 import pm.javaPractice.controller.BookManager;
 import pm.javaPractice.model.BookDTO;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class BookMenu {
     private Scanner sc = new Scanner(System.in);
@@ -84,13 +87,10 @@ public class BookMenu {
         String bNo = sc.next();
 
         String title = inputBookTitle();
-        System.out.print("도서 장르 (1:인문 / 2:자연과학 / 3:의료 / 4:기타) : ");
-        int category = sc.nextInt();
-        while (((category<1)||(category>4))){
-            System.out.println("잘못된 입력입니다");
-            System.out.print("도서 장르 (1:인문 / 2:자연과학 / 3:의료 / 4:기타) : ");
-            category = sc.nextInt();
-        }
+
+
+
+        int category = bookCategory();
         System.out.print("도서 저자 : ");
         String author = sc.next();
         BookDTO newBook = new BookDTO(bNo,category,title,author);
@@ -100,5 +100,23 @@ public class BookMenu {
         System.out.print("도서 제목 : ");
         String booktitle= sc.next();
         return booktitle;
+    }
+    public int bookCategory(){
+        int category = -1;
+        Set<Integer> validInputs = new HashSet<>(Arrays.asList(1, 2, 3, 4));
+        while(true){
+            System.out.print("도서 장르 (1:인문 / 2:자연과학 / 3:의료 / 4:기타) : ");
+            if(sc.hasNextInt()){
+                category = sc.nextInt();
+                if(validInputs.contains(category)){
+                    return category;
+
+                }
+            } else{
+                sc.next();
+            }
+            System.out.println("잘못된 입력입니다");
+
+        }
     }
 }
