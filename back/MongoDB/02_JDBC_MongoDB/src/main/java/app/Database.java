@@ -28,7 +28,7 @@ public class Database {
     * -> 클래스가 로드될때 한번 실행됨
     * */
     static {
-
+        // 데이터베이스 연결 및 database 참조 설정
         // Java 클래스(POJO)를 MongoDB의 DSON으로 자동 변환해주는 Codec을 제공하는 객체
         CodecProvider pojoCodecProvider = PojoCodecProvider.builder() // 체인 형태로 사용 가능
                 .automatic(true) // 자동매핑 활성화
@@ -46,16 +46,16 @@ public class Database {
         database = client.getDatabase("todo_db").withCodecRegistry(pojoCodecRegistry);
     }
 
-    public static void close() {
+    public static void close() { // 데이터베이스 닫기
         client.close();
     }
 
     // 몽고 database 꺼낼 수 있는 getter
-    public static MongoDatabase getDatabase() {
+    public static MongoDatabase getDatabase() { // 데이터베이스 참조 얻기
         return database;
     }
 
-    public static MongoCollection<Document> getCollection(String colName) {
+    public static MongoCollection<Document> getCollection(String colName) {  // 전달된 컬렉션이름의 컬렉션 리턴하기
         MongoCollection<Document> collection = database.getCollection(colName);
         return collection;
     }

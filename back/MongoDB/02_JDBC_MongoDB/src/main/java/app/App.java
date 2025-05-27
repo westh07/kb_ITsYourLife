@@ -2,11 +2,19 @@ package app;
 
 import app.domain.Todo;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class App {
     private static final Scanner scanner = new Scanner(System.in);
@@ -19,7 +27,7 @@ public class App {
             System.out.println("1. insertOne");
             System.out.println("2. insertMany");
             System.out.println("3. findAll");
-            System.out.println("4. updateOne");
+            System.out.println("4.sw updateOne");
             System.out.println("5. deleteOne");
             System.out.print("원하는 작업 번호를 입력하세요: ");
 
@@ -40,13 +48,37 @@ public class App {
                     return; // main 메서드 종료
                 }
                 case 1 -> insertOne();
-//                case 2 -> insertMany();
+                case 2 -> insertMany();
                 case 3 -> findAll();
-//                case 4 -> updateOne();
-//                case 5 -> deleteOne();
+                case 4 -> updateOne();
+                case 5 -> deleteOne();
                 default -> System.out.println("잘못된 번호입니다.");
             }
         }
+    }
+
+    private static void deleteOne() {
+        Bson query = eq("age",10);
+        DeleteResult result = collection.deleteOne(query);
+    }
+
+    private static void updateOne() {
+        String id = "683563b9d44b5a4d098e3adb";
+//        Bson query = eq("_id", new ObjectId(id));
+        Bson query = eq("desc", "desc1");
+        Bson updates = Updates.combine(
+            Updates.set("name","modify name")
+        );
+        UpdateResult result = collection.updateOne(query, updates);
+    }
+
+    private static void insertMany() {
+        List<Todo> insertList = new ArrayList<>();
+        Todo newTodo1 = new Todo(null,"insertMany 예시 title1","insertMany 예시 desc1",false);
+        Todo newTodo2 = new Todo(null,"insertMany 예시 title2","insertMany 예시 desc2",false);
+        insertList.add(newTodo1);
+        insertList.add(newTodo2);
+        collection.insertMany(insertList);
     }
 
     private static void findAll() {
@@ -62,7 +94,27 @@ public class App {
     }
 
     private static void insertOne() {
-        Todo newTodo = new Todo(null,"POJO","POJO 테스트 확인",false);
+        // id title desc done
+        String t = null;
+        String d = null;
+        Boolean done = null;
+        while (true) {
+            try {
+                System.out.print("title을 입력하시오 : ");
+                t = scanner.nextLine();
+
+                System.out.print("desc 설명을 입력하시오 : ");
+                d = scanner.nextLine();
+
+                System.out.print("done을 입력하시오 (true/false) : ");
+                done = Boolean.parseBoolean(scanner.nextLine());
+
+                break;
+            } catch (Exception e) {
+                System.out.println("다시 입력하시오");
+            }
+        }
+        Todo newTodo = new Todo(null,t,d,done);
 
         System.out.println("ID : " + newTodo.getId() + " ===> insert 이전");
 
