@@ -1,0 +1,18 @@
+<!--
+자바에서 사용되는 log 기록 도구
+- 로그를 어떻게 출력할지, 저장할지 등을 설정하는 xml 파일
+-->
+<configuration>
+    <appender name="CONSOLE"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %-4relative [%thread] %-5level %logger{30} --%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <logger name="org.mongodb.driver.connection" level="INFO" additivity="true"/>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
