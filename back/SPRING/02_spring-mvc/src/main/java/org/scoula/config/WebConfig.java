@@ -4,6 +4,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration;
 
 /*
 * Web 설정
@@ -40,4 +41,13 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         return super.getServletFilters();
     }
 
+    /*
+    * DispatcherServlet이 매핑되지 않은 요청을 받았을 때
+    * 기본적으로 404 NOT FOUND를 클라이언트에게 반환
+    * 이 설정을 추가하면 예외(NoHandlerFoundException)을 던지도록 강제
+    * */
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setInitParameter("ThrowExceptionIfNoHandlerFound","true");
+    }
 }

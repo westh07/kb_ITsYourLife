@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
 // mvc 관련된 설정이나 객체 생성 + 주입
 //@Configuration // 설정 파일
 @EnableWebMvc // @Configuration 이면서 Mvc 관련된 설정을 할 수 있는 파일로 등록
-@ComponentScan(basePackages = "org.scoula.controller") // 싱글톤으로 만들 클래스 주소
+@ComponentScan(basePackages = "org.scoula") // 싱글톤으로 만들 클래스 주소
 public class ServletConfig implements WebMvcConfigurer {
     // 어떤 함수를 써서 설정해야할지 이미 WebMvcConfigurer에 정의 되어 있음
     // -> override해서 개발 상황에 맞게 정의해주면됨
